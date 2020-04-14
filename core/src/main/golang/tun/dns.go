@@ -2,8 +2,8 @@ package tun
 
 import (
 	"encoding/binary"
-	"github.com/Dreamacro/clash/component/resolver"
-	"github.com/Dreamacro/clash/dns"
+	"github.com/brobird/clash/component/resolver"
+	"github.com/brobird/clash/dns"
 	"github.com/kr328/cfa/utils"
 	"github.com/kr328/tun2socket/binding"
 	"github.com/kr328/tun2socket/redirect"

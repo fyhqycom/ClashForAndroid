@@ -1,6 +1,6 @@
 package tun
 
-import "github.com/Dreamacro/clash/log"
+import "github.com/brobird/clash/log"
 
 type ClashLogger struct {}
 

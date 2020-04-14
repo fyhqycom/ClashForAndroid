@@ -81,13 +81,13 @@ android {
         //     }
         // }
         signingConfigs{
-        release{
-            storeFile rootProject.file("release.jks")
-            keyAlias "release"
-            storePassword "$System.env.KEYSTORE_PWD"
-            keyPassword "$System.env.KEY_PWD"
+            maybeCreate("release").apply{
+                storeFile = rootProject.file("release.jks")
+                keyAlias = "release"
+                storePassword = "$System.env.KEYSTORE_PWD"
+                keyPassword = "$System.env.KEY_PWD"
+            }
         }
-    }
         buildTypes {
             maybeCreate("release").apply {
                 this.signingConfig = signingConfigs.findByName("release")

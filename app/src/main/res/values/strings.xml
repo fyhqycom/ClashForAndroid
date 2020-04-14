@@ -70,7 +70,7 @@
     <string name="new_profile">New Profile</string>
     <string name="clone_profile">Clone Profile</string>
     <string name="edit_profile">Edit Profile</string>
-    <string name="clash_start_failure">Clash Start Failure</string>
+    <string name="clash_start_failure">ClashR Start Failure</string>
     <string name="refresh">Refresh</string>
 
     <string name="delay">Delay</string>
@@ -91,7 +91,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
 
-    <string name="clash_logcat">Clash Logcat</string>
+    <string name="clash_logcat">ClashR Logcat</string>
     <string name="history">History</string>
     <string name="log_viewer">Log Viewer</string>
     <string name="format_export_log_name">%s.log</string>
@@ -109,7 +109,7 @@
 
     <string name="restart">Restart</string>
     <string name="auto_restart">Auto Restart</string>
-    <string name="allow_clash_auto_restart">Allow clash auto restart</string>
+    <string name="allow_clash_auto_restart">Allow ClashR auto restart</string>
 
     <string name="notification">Notification</string>
     <string name="show_traffic">Show Traffic</string>
@@ -126,7 +126,7 @@
     <string name="dns_override">DNS Config Override</string>
     <string name="dns_override_summary">Force use builtin DNS config</string>
     <string name="append_system_dns">Append System DNS</string>
-    <string name="append_system_dns_summary">Auto add system dns to clash</string>
+    <string name="append_system_dns_summary">Auto add system dns to ClashR</string>
     <string name="access_control_mode">Access Control Mode</string>
     <string name="access_control_packages">Access Control Packages</string>
     <string name="access_control_packages_summary">Configure access permission for apps</string>

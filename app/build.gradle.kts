@@ -71,7 +71,7 @@ android {
             signingFile.inputStream().use {
                 load(it)
             }
-        // }
+        }
         // signingConfigs {
         //     maybeCreate("release").apply {
         //         storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
@@ -82,7 +82,7 @@ android {
         // }
         signingConfigs{
         release{
-            storeFile rootProject.file('release.jks')
+            storeFile rootProject.file("release.jks")
             keyAlias "release"
             storePassword "$System.env.KEYSTORE_PWD"
             keyPassword "$System.env.KEY_PWD"

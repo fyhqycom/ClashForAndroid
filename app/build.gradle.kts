@@ -72,14 +72,21 @@ android {
                 load(it)
             }
         }
-        // signingConfigs {
-        //     maybeCreate("release").apply {
-        //         storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
-        //         storePassword = Objects.requireNonNull(properties.getProperty("storePassword"))
-        //         keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
-        //         keyPassword = Objects.requireNonNull(properties.getProperty("keyPassword"))
-        //     }
-        // }
+        signingConfigs {
+            maybeCreate("release").apply {
+                storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
+                storePassword = Objects.requireNonNull(properties.getProperty("storePassword"))
+                keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
+                keyPassword = Objects.requireNonNull(properties.getProperty("keyPassword"))
+            }
+        }
+        buildTypes {
+            maybeCreate("release").apply {
+                this.signingConfig = signingConfigs.findByName("release")
+            }
+        }
+    }
+    else{
         signingConfigs{
             maybeCreate("release").apply{
                 storeFile = rootProject.file("release.jks")

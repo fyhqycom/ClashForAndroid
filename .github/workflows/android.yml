@@ -49,4 +49,4 @@ jobs:
         with:
           files: upload/*.apk
           draft: false
-          prerelease: false
+          prerelease: true

@@ -32,7 +32,7 @@ android {
     buildToolsVersion(gBuildToolsVersion)
 
     defaultConfig {
-        applicationId = "com.github.kr328.clash"
+        applicationId = "com.github.brobird.clashR"
 
         minSdkVersion(gMinSdkVersion)
         targetSdkVersion(gTargetSdkVersion)
@@ -71,15 +71,23 @@ android {
             signingFile.inputStream().use {
                 load(it)
             }
+        // }
+        // signingConfigs {
+        //     maybeCreate("release").apply {
+        //         storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
+        //         storePassword = Objects.requireNonNull(properties.getProperty("storePassword"))
+        //         keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
+        //         keyPassword = Objects.requireNonNull(properties.getProperty("keyPassword"))
+        //     }
+        // }
+        signingConfigs{
+        release{
+            storeFile rootProject.file('release.jks')
+            keyAlias "release"
+            storePassword "$System.env.KEYSTORE_PWD"
+            keyPassword "$System.env.KEY_PWD"
         }
-        signingConfigs {
-            maybeCreate("release").apply {
-                storeFile = rootProject.file(Objects.requireNonNull(properties.getProperty("storeFile")))
-                storePassword = Objects.requireNonNull(properties.getProperty("storePassword"))
-                keyAlias = Objects.requireNonNull(properties.getProperty("keyAlias"))
-                keyPassword = Objects.requireNonNull(properties.getProperty("keyPassword"))
-            }
-        }
+    }
         buildTypes {
             maybeCreate("release").apply {
                 this.signingConfig = signingConfigs.findByName("release")

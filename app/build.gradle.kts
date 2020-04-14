@@ -84,8 +84,8 @@ android {
             maybeCreate("release").apply{
                 storeFile = rootProject.file("release.jks")
                 keyAlias = "release"
-                storePassword = "$System.env.KEYSTORE_PWD"
-                keyPassword = "$System.env.KEY_PWD"
+                storePassword = System.getenv("KEYSTORE_PWD")
+                keyPassword = System.getenv("KEY_PWD")
             }
         }
         buildTypes {

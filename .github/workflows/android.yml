@@ -38,6 +38,7 @@ jobs:
           KEY_PWD: ${{ secrets.KEY_PWD }}
         run: ./gradlew assembleRelease
       - name: Prepare APKs
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           mkdir upload
           cp app/build/outputs/apk/release/*.apk upload

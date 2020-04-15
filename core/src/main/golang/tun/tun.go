@@ -2,10 +2,10 @@ package tun
 
 import (
 	"errors"
-	adapters "github.com/brobird/clash/adapters/inbound"
-	"github.com/brobird/clash/component/socks5"
-	C "github.com/brobird/clash/constant"
-	"github.com/brobird/clash/tunnel"
+	adapters "github.com/Dreamacro/clash/adapters/inbound"
+	"github.com/Dreamacro/clash/component/socks5"
+	C "github.com/Dreamacro/clash/constant"
+	"github.com/Dreamacro/clash/tunnel"
 	"github.com/kr328/tun2socket"
 	"github.com/kr328/tun2socket/binding"
 	"github.com/kr328/tun2socket/redirect"
@@ -14,7 +14,7 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/brobird/clash/log"
+	"github.com/Dreamacro/clash/log"
 )
 
 const (

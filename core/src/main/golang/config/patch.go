@@ -1,9 +1,9 @@
 package config
 
 import (
-	"github.com/brobird/clash/component/fakeip"
-	"github.com/brobird/clash/config"
-	"github.com/brobird/clash/dns"
+	"github.com/Dreamacro/clash/component/fakeip"
+	"github.com/Dreamacro/clash/config"
+	"github.com/Dreamacro/clash/dns"
 	"net/url"
 )
 

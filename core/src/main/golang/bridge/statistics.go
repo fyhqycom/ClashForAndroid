@@ -3,7 +3,7 @@ package bridge
 import (
 	"sync"
 
-	"github.com/brobird/clash/tunnel"
+	"github.com/Dreamacro/clash/tunnel"
 )
 
 type EventPoll struct {

@@ -192,10 +192,11 @@ task("extractSources", type = Copy::class) {
 }
 
 task("downloadGeoipDatabase") {
+    dependsOn(tasks["extractSources"])
     onlyIf {
         val file = buildDir.resolve(Constants.OUTPUT_PATH).resolve("assets/Country.mmdb")
 
-        System.currentTimeMillis() - file.lastModified() > Constants.GEOIP_INVALID_INTERVAL
+        (System.currentTimeMillis() - file.lastModified() > Constants.GEOIP_INVALID_INTERVAL || !file.exists())
     }
 
     doLast {

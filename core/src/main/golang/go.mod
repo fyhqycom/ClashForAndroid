@@ -9,4 +9,3 @@ require (
 )
 
 replace github.com/Dreamacro/clash => ./clash
-replace github.com/brobird/clash => ./clash

@@ -36,7 +36,7 @@ jobs:
         env:
           KEYSTORE_PWD: ${{ secrets.KEYSTORE_PWD }}
           KEY_PWD: ${{ secrets.KEY_PWD }}
-        run: ./gradlew assembleRelease
+        run: ./gradlew aR
       - name: Prepare APKs
         if: startsWith(github.ref, 'refs/tags/')
         run: |

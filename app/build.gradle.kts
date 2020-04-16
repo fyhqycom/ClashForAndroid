@@ -32,7 +32,7 @@ android {
     buildToolsVersion(gBuildToolsVersion)
 
     defaultConfig {
-        applicationId = "com.github.brobird.clashR"
+        applicationId = "com.github.ClashRforAndroid"
 
         minSdkVersion(gMinSdkVersion)
         targetSdkVersion(gTargetSdkVersion)

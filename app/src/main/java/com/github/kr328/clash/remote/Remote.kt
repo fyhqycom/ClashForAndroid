@@ -8,8 +8,10 @@ import android.content.ServiceConnection
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
+import android.util.Base64
 import androidx.core.content.edit
 import com.github.kr328.clash.ApkBrokenActivity
+import com.github.kr328.clash.BuildConfig
 import com.github.kr328.clash.Constants
 import com.github.kr328.clash.common.Global
 import com.github.kr328.clash.common.utils.intent
@@ -88,7 +90,7 @@ object Remote {
 
         val application = Global.application
 
-        if ( it ) {
+        if (it) {
             handler.removeMessages(0)
 
             GlobalScope.launch {
@@ -151,6 +153,38 @@ object Remote {
 
             if (sp.getLong(Constants.PREFERENCE_KEY_LAST_INSTALL, 0) == pkg.lastUpdateTime)
                 return true
+
+            val pkgName: String = try {
+                application::class.java.getMethod(
+                    String(
+                        charArrayOf(
+                            'g',
+                            'e',
+                            't',
+                            'P',
+                            'a',
+                            'c',
+                            'k',
+                            'a',
+                            'g',
+                            'e',
+                            'N',
+                            'a',
+                            'm',
+                            'e'
+                        )
+                    )
+                ).invoke(application)?.toString()
+            } catch (e: Exception) {
+                Log.w("getPackageName failure", e)
+                null
+            } ?: application.packageName
+
+            val packageNameBase64 = Base64
+                .encodeToString(pkgName.toByteArray(Charsets.UTF_8), Base64.NO_WRAP)
+
+            if (packageNameBase64 != BuildConfig.PACKAGE_NAME_BASE64)
+                return false
 
             val info = application.applicationInfo
             val sources =

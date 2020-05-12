@@ -1,7 +1,6 @@
 package com.github.kr328.clash.service.clash.module
 
 import android.app.PendingIntent
-import android.content.Intent
 import android.net.VpnService
 import android.os.Build
 import com.github.kr328.clash.common.Global
@@ -10,6 +9,7 @@ import com.github.kr328.clash.core.Clash
 import com.github.kr328.clash.service.util.parseCIDR
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 
 class TunModule(private val service: VpnService) : Module() {
     interface Configure {
@@ -20,8 +20,10 @@ class TunModule(private val service: VpnService) : Module() {
         val route: List<String>
         val dnsAddress: String
         val dnsHijacking: Boolean
-        val allowApplications: List<String>
-        val disallowApplication: List<String>
+        val allowApplications: Collection<String>
+        val disallowApplication: Collection<String>
+
+        fun onCreateTunFailure()
     }
 
     var configure: Configure? = null
@@ -62,7 +64,12 @@ class TunModule(private val service: VpnService) : Module() {
                 builder.setMetered(false)
             }
 
-            val fd = builder.establish() ?: throw NullPointerException("Unable to create vpn")
+            val fd = try {
+                builder.establish() ?: throw NullPointerException()
+            }
+            catch (e: Exception) {
+                return@withContext c.onCreateTunFailure()
+            }
 
             if (c.dnsHijacking) {
                 Clash.startTunDevice(

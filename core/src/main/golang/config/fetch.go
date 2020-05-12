@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
+	"net/url"
 	"os"
 	"syscall"
 
@@ -29,20 +30,29 @@ var client = &http.Client{
 
 			client, server := net.Pipe()
 
-			tunnel.Add(inbound.NewSocket(socks5.ParseAddr(address), server, constant.HTTP, constant.TCP))
+			tunnel.Add(inbound.NewSocket(socks5.ParseAddr(address), server, constant.HTTP))
 
 			return client, nil
 		},
 	},
 }
 
-func fetchRemote(url string) ([]byte, error) {
-	request, err := http.NewRequest("GET", url, nil)
+func fetchRemote(sUrl string) ([]byte, error) {
+	uri, err := url.Parse(sUrl)
+	if err != nil {
+		return nil, err
+	}
+
+	request, err := http.NewRequest("GET", uri.String(), nil)
 	if err != nil {
 		return nil, err
 	}
 
 	request.Header.Set("User-Agent", "ClashForAndroid/"+ApplicationVersion)
+	if user := uri.User; user != nil {
+		password, _ := user.Password()
+		request.SetBasicAuth(user.Username(), password)
+	}
 
 	response, err := client.Do(request)
 	if err != nil {
@@ -87,13 +97,9 @@ func PullLocal(fd int, output, baseDir string) error {
 }
 
 func save(data []byte, output, baseDir string) error {
-	cfg, err := parseConfig(data, baseDir)
+	_, err := parseConfig(data, baseDir)
 	if err != nil {
 		return err
-	}
-
-	for _, v := range cfg.Providers {
-		_ = v.Destroy()
 	}
 
 	return ioutil.WriteFile(output, data, defaultFileMode)

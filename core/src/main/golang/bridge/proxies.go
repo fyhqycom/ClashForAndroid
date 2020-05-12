@@ -106,21 +106,40 @@ func QueryAllProxyGroups(collection ProxyGroupCollection) {
 func SetSelectedProxy(name, proxy string) bool {
 	p := tunnel.Proxies()[name]
 	if p == nil {
+		log.Infoln("Set %s: Not such proxy group", name)
 		return false
 	}
 
 	pb, ok := p.(*outbound.Proxy)
 	if !ok {
+		log.Infoln("Set %s: Not a proxy object", name)
 		return false
 	}
 
 	selector, ok := pb.ProxyAdapter.(*outboundgroup.Selector)
 	if !ok {
+		log.Infoln("Set %s: Not a selector group", name)
 		return false
 	}
 
+	selected := selector.Now()
+	if selected == proxy {
+		log.Infoln("Set " + name + " -> " + proxy)
+		return true
+	}
+
 	if err := selector.Set(proxy); err != nil {
+		log.Infoln("Set %s: %s", name, err.Error())
 		return false
+	}
+
+	for _, conn := range tunnel.DefaultManager.Snapshot().Connections {
+		for _, p := range conn.Chain() {
+			if p == name {
+				_ = conn.Close()
+				break
+			}
+		}
 	}
 
 	log.Infoln("Set " + name + " -> " + proxy)

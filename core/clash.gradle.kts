@@ -4,7 +4,7 @@ import java.util.*
 import java.net.*
 
 object Constants {
-    const val GEOIP_DATABASE_URL = "https://github.com/Dreamacro/maxmind-geoip/releases/latest/download/Country.mmdb"
+    const val GEOIP_DATABASE_URL = "https://cdn.jsdelivr.net/gh/alecthw/mmdb_china_ip_list@release/Country.mmdb"
     const val GEOIP_INVALID_INTERVAL = 1000L * 60 * 60 * 24 * 7
 
     const val SOURCE_PATH = "src/main/golang"
@@ -145,7 +145,7 @@ task("generateClashBindSources") {
     }
 }
 
-task("bindClashCore") {
+task("assembleClashCore") {
     dependsOn(tasks["generateClashBindSources"])
 
     onlyIf {
@@ -169,14 +169,8 @@ task("bindClashCore") {
 }
 
 task("extractSources", type = Copy::class) {
-    dependsOn(tasks["bindClashCore"])
+    dependsOn(tasks["assembleClashCore"])
 
-    doFirst {
-        buildDir.resolve(Constants.OUTPUT_PATH).apply {
-            resolve("jniLibs").deleteRecursively()
-            resolve("classes").deleteRecursively()
-        }
-    }
     from(zipTree(buildDir.resolve(Constants.GOLANG_OUTPUT))) {
         include("**/*.so")
         eachFile {
@@ -212,7 +206,7 @@ task("downloadGeoipDatabase") {
     }
 }
 
-task("resetGolangMode", type = Exec::class) {
+task("resetGolangPathMode", type = Exec::class) {
     onlyIf {
         !Os.isFamily(Os.FAMILY_WINDOWS)
     }
